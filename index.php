@@ -7,6 +7,21 @@ require_once('config.php');
 
 if(isset($_POST['submit'])){
     
+    $email = $_POST['email'];
+    $name = $_Post['firstname'] + " " + $_POST['lastname'];
+    echo "submit POST succesfull";
+    foreach ($_POST as $key => $value) {
+        echo "<tr>";
+        echo "<td>";
+        //echo $key;
+        echo "</td>";
+        echo "<td>";
+        echo $value;
+        echo "</td>";
+        echo "</tr>";
+    }
+
+    /*
     if(strlen($_POST['username']) < 5){
         $error[] = 'Username is too short';
     }else{
@@ -17,8 +32,10 @@ if(isset($_POST['submit'])){
         if(!empty($row['username'])){
             $error[] = 'Username is currently in use';
         }
-    }
+    }*/
+
 }
+
 $title = 'Signup';
 require('header.php');
 
@@ -44,7 +61,7 @@ require('header.php');
 
     <div class="container">
       <div class="signup-form">
-        <form method="post">
+        <form method="post" action="">
           <div class="row">
             <div class="six columns">
               <label for="exampleEmailInput"> Email</label>
@@ -53,15 +70,15 @@ require('header.php');
             <div class="six columns">
               <label for="teacherOrStudent"> Φοιτητής ή Καθηγητής</label>
               <select class="u-full-width" id="teacherOrStudent">
-            <option name ="student" value="Option 1">Φοιτητής</option>
-            <option name ="faculty" value="Option 2">Καθηγητής</option>
-          </select>
+                <option name ="student" value="Option 1">Φοιτητής</option>
+                <option name ="faculty" value="Option 2">Καθηγητής</option>
+              </select>
             </div>
           </div>
           <div class="row">
             <div class="six columns">
               <label for="firstNameInput">Όνομα</label>
-              <input  name="username" class="u-full-width" type="text" placeholder="Όνομα" id="firstNameInput" ; </div>
+              <input  name="firstname" class="u-full-width" type="text" placeholder="Όνομα" id="firstNameInput" ; </div>
             </div>
             <div class="six columns">
               <label for="lastNameInput">Επώνυμο</label>
@@ -70,7 +87,7 @@ require('header.php');
           </div>
           <div class="row">
             <div class="six columns">
-              <label for="passwordInput">Όνομα</label>
+              <label for="passwordInput">Κωδικός</label>
               <input name="password" class="u-full-width" type="password" placeholder="Κωδικός" id="passwordInput" ; </div>
             </div>
             <div class="six columns">
@@ -84,15 +101,23 @@ require('header.php');
               <input name="security" class="u-full-width" type="text" placeholder="Πόσο κάνει 5+12;" id="matchCaptcha" ; </div>
             </div>
           </div>
+          <div class="row">
+            <div class="six collumns">
+                <div class="container">
+                    <input type="submit" name ="submit" value="Εγγραφή" class="button button-primary">
+               </div>
+            </div>
+          </div> 
         </form>
       </div>
     </div>
     <div class="section confirm">
-      <div class="container">
-        <input type="submit" name ="submit" value="Εγγραφή" class="button button-primary">
-      </div>
+
     </div>
     <div class="blurred" </div>
   </section>
   <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+<?php
+  require('footer.php');
+?>
