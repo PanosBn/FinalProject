@@ -5,36 +5,35 @@ require_once('config.php');
     header('Location: memberpage.php');
 }*/
 
-if(isset($_POST['submit'])){
-    
+if(isset($_POST['submit'])) {
     $email = $_POST['email'];
-    $name = $_Post['firstname'] + " " + $_POST['lastname'];
+    $name = $_POST['firstname'] + " " + $_POST['lastname'];
     echo "submit POST succesfull";
-    foreach ($_POST as $key => $value) {
-        echo "<tr>";
-        echo "<td>";
-        //echo $key;
-        echo "</td>";
-        echo "<td>";
-        echo $value;
-        echo "</td>";
-        echo "</tr>";
+    print_r($_POST);
+    
+    if(strlen($_POST['username']) < 5) {
+      $error[] = 'Το username πρέπει να αποτελείται απο τουλάχιστον 5 χαρακτήρες';
     }
-
-    /*
-    if(strlen($_POST['username']) < 5){
-        $error[] = 'Username is too short';
-    }else{
-        $check_name_query = $db->prepare('select username from registered where username = :name');
-        $check_name_query->execute(array(':username' => $_POST['username']));
-        $row = $check_name_query->fetch(PDO::FETCH_ASSOC);
-
-        if(!empty($row['username'])){
-            $error[] = 'Username is currently in use';
-        }
-    }*/
-
-}
+    if($_POST['password'] != $_POST['passwordConfirm']){
+		  $error[] = 'Ο κωδικός δεν είναι σωστός.';
+  	}
+    if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+	    $error[] = 'Please enter a valid email address';
+	  } else {
+      $stmt = $db->prepare('SELECT email FROM members WHERE email = :email');
+      $row = $stmt->execute(array(':email' => $_POST['email']))->fetch(PDO::FETCH_ASSOC);
+      if(!empty($row['email'])){
+          $error[] = 'Email provided is already in use.';
+      }
+    }
+  // } else{
+  //   $check_name_query = $db->prepare('select username from registered where username = :firstname');
+  //   $check_name_query->execute(array(':username' => $_POST['firstname']));
+  //   $row = $check_name_query->fetch(PDO::FETCH_ASSOC);
+  //   if(!empty($row['firstname'])) {
+  //       $error[] = 'Username is currently in use';
+  //   }
+  }
 
 $title = 'Signup';
 require('header.php');
@@ -49,6 +48,7 @@ require('header.php');
     
 
 </section>
+
   
   <section id="signup" class="signup u-full-width">
     <div class="container">
