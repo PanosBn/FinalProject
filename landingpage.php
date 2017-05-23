@@ -1,22 +1,31 @@
-<?php 
+<?php
+// require_once("session_init.php");
 require_once('config.php');
+require_once('user.php');
 require('header.php');
 
 
-if(isset($_POST['submit'])){
-    $username = $_POST['username'];
+if(isset($_POST['login'])){
+    $email = $_POST['email'];
 	$password = $_POST['password'];
+    //print_r($_POST);
 	
-	if($user->login($username,$password)){ 
-		$_SESSION['username'] = $username;
-		header('Location: sessionpage.php');
+	if($user->login($email,$password)){ 
+		$_SESSION['email'] = $email;
+        // WRITE SESSION VARIABLES
+		//header("Location: sessionpage.php");
 		exit;
 	
 	} else {
-		$error[] = 'Wrong username or password or your account has not been activated.';
-        $error_username = True;
+		$error[] = 'Wrong email or password or your account has not been activated.';
+        $error_email = true;
 	}
 
+}
+
+// WHERE YOU MUST SEE USER INFORMATION
+if(isset($USER)) {
+    // SHOW user menu
 }
 ?>
 
@@ -29,11 +38,11 @@ if(isset($_POST['submit'])){
                 <div class="section-loginorsignup">
                         <form method="POST" action="">
                             <div class="row">
-                                <label for="username">Ονομα Χρήστη</label>
-                                <input name="username"  type="text" id="firstNameInput" ; </input>
+                                <label for="emailInput">Email Χρήστη</label>
+                                <input name="email"  type="text" id="emailInput" ; </input>
                                 <?php
-                                if(isset($error_username)) {
-                                    echo "<div style=\"color: red;\">Invalid username</div>";
+                                if(isset($error_email)) {
+                                    echo "<div style=\"color: red;\">Invalid email</div>";
                                 }
                                 ?>
                             </div>

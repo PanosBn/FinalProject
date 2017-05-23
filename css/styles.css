@@ -16,13 +16,46 @@
     filter: blur(12px);
 
 }
-.section{
+/*.section{
     text-align: center;
-}
+}*/
 
 .button{
     border-radius: 100px;
     
+}
+
+.button-login{
+    border-radius: 150px;
+}
+
+/*.section-placeholder{
+    height: 300px;
+    width: 100%;
+}*/
+
+/*.row loginorsignup{
+    width: 300px;
+
+}*/
+
+.loginSection{
+     
+}
+
+
+.section-loginorsignup{
+
+    text-align: center;
+    padding: 20px 20px 20px 20px;
+    border: 2px solid;
+    background: #ffd740;
+}
+
+.section-heading{
+    opacity: 7;
+    color : #424242;
+
 }
 
 .pagePurpose {
@@ -33,9 +66,9 @@
     font-weight: 400;
 }
 
-.container{
+/*.container{
     margin-top: 50px;
-}
+}*/
 
 .signup-form{
     
