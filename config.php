@@ -26,7 +26,7 @@ try {
 }
 
 
-include('user.php');
+include('classes/user.php');
 $user = new User($conn);
 
 ?>

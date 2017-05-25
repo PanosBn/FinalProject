@@ -43,7 +43,7 @@ if(isset($_POST['submit'])) {
   }
 
 $title = 'Signup';
-require('header.php');
+require('injecthtml/header.php');
 
 ?>
 
@@ -132,5 +132,5 @@ require('header.php');
   <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 <?php
-  require('footer.php');
+  require('injecthtml/footer.php');
 ?>

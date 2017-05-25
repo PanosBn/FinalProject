@@ -2,7 +2,7 @@
 // require_once("session_init.php");
 require_once 'config.php';
 //require_once('user.php');
-require('header.php');
+require('injecthtml/header.php');
 
 
 if(isset($_POST['login'])){
@@ -75,3 +75,7 @@ if(isset($USER)) {
 
 
 <div class="blurred" </div>
+
+<?php
+require('injecthtml/footer.php');
+?>
