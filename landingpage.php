@@ -1,21 +1,22 @@
 <?php
 // require_once("session_init.php");
-require_once('config.php');
-require_once('user.php');
+require_once 'config.php';
+//require_once('user.php');
 require('header.php');
 
 
 if(isset($_POST['login'])){
     $email = $_POST['email'];
 	$password = $_POST['password'];
-    //print_r($_POST);
+    // print_r($email);
+    // print_r( "<br /> ");
+    // print_r($password);
 	
 	if($user->login($email,$password)){ 
-		$_SESSION['email'] = $email;
+		//$_SESSION['email'] = $email;
         // WRITE SESSION VARIABLES
-		//header("Location: sessionpage.php");
-		exit;
-	
+        //print_r($_Session["user_info"]);
+		header("Location: sessionpage.php");
 	} else {
 		$error[] = 'Wrong email or password or your account has not been activated.';
         $error_email = true;

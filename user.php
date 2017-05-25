@@ -1,32 +1,35 @@
 <?php
 
-Class User{
+class User{
 
-    private $db;
+    private $conn;
 
-    function _construct($db){
-        $this->db = $db;
+    function __construct($db){
+        $this->conn = $db;
     }
 
     public function login($given_email, $given_password){
         try{
-            $query = $this->db->prepare("SELECT * from user where email=:given_email and password=:given_password");
-            $row = $query->execute(array(':email'=> $given_email, ':password'=>$given_password))->fetch(PDO::FETCH_ASSOC);
-
-            if ($query->rowCount > 0) {
-                $_SESSION['verified_proceed'] = $row['uid'];
-                return true;
-            }
-            else{
-                return false;
-            }
-        } catch (PDOException $exc){
-            echo '<p class="bg-danger">'.$exc->getMessage().'</p>';
+            $stmt = $this->conn->prepare('SELECT * FROM user WHERE email = :email AND password = :password');
+            $stmt->execute(array('email' => $given_email, 'password' => $given_password));
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($stmt->rowCount() > 0){
+                    $_SESSION["user_info"] = $row;
+                    $_SESSION["user_flag"] = true;
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            } catch (PDOException $exc){
+                echo 'Problemo: ' . $exc->getMessage();
+                echo $conn->errorCode();
+                echo $conn->errorInfo();
         }
     }
 
     public function register($fname,$lname,$password,$email,$unistatus){
-        $query = $this->db->prepare("INSERT INTO user(name,surname,password,email,unistatus) 
+        $query = $this->conn->prepare("INSERT INTO user(name,surname,password,email,unistatus) 
                                             VALUES(:fname, :lname, :password, :email, :unistatus)");
         $query->bindparam(":fname",$name);
         $query->bindparam(":lname",$surname);
@@ -38,7 +41,18 @@ Class User{
     }
 
     public function logout(){
+
         session_destroy();
+        unset($_SESSION["user_flag"]);
         header('Location: landingpage.php');
+    }
+
+    public function session_status(){
+        if (isset($_SESSION["user_flag"])){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }

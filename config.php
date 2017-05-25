@@ -1,6 +1,5 @@
 <?php
 
-ob_start();
 session_start();
 
 date_default_timezone_get('Europe/Athens');
@@ -10,24 +9,25 @@ define('DBUSER','panos1');
 define('DBPASS','panos1');
 define('DBNAME','icsd');
 
-define('DIR','192.168.1.68:8080');
-define('SITEMAIL','panagiotisban@gmail.com');
+$conn = null;
 
 try {
 
     
-    $db = new PDO("mysql:host=".DBHOST.";port=3306;dbname=".DBNAME, DBUSER, DBPASS);
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn = new PDO('mysql:host=localhost;dbname=icsd', "panos1", "panos1");
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 } catch(PDOException $exc) {
     //show error
     echo '<p class="bg-danger">'.$exc->getMessage().'</p>';
+    echo $conn->errorCode();
+    echo $conn->errorInfo();
     exit;
 }
 
-require_once('user.php');
 
-$user = new USER($db);
+include('user.php');
+$user = new User($conn);
 
 ?>
 
