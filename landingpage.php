@@ -16,7 +16,12 @@ if(isset($_POST['login'])){
 		//$_SESSION['email'] = $email;
         // WRITE SESSION VARIABLES
         //print_r($_Session["user_info"]);
-		header("Location: sessionpage.php");
+        if ($_SESSION["unistatus"] == "student"){
+            header("Location: studentpage.php");
+        } else{
+            header("Location: facultypage.php");
+        }
+		//header("Location: sessionpage.php");
 	} else {
 		$error[] = 'Wrong email or password or your account has not been activated.';
         $error_email = true;

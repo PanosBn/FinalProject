@@ -39,9 +39,6 @@
 
 }*/
 
-.loginSection{
-     
-}
 
 
 .section-loginorsignup{
@@ -66,14 +63,39 @@
     font-weight: 400;
 }
 
-/*.container{
-    margin-top: 50px;
-}*/
 
 .signup-form{
     
     padding: 10px auto;
 }
 
+.topnav ul{
+    list-style: none;
+    text-align: center;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    background-color: #ffd740;
+}
 
+.topnav li{
+    display: inline-block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-top: 3px;
+    line-height: 30px;
+}
 
+.topnav a{
+    font-size: 1.5em;
+    text-decoration: none;
+    word-spacing: 3px;
+    border-right: 1px solid;
+    border-color: #424242;
+    padding-right: 2px;
+    padding-left: 2px;
+    color: #424242;
+}
+
+.topnav a:hover{
+    background-color: #42d9f4;
+    color: #f3f3f3;
+}
