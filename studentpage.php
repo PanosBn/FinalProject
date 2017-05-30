@@ -11,15 +11,11 @@ if (!$user->session_status()){
 //An o xristis sundethei me epituxia tote emfanizetai to navigation bar, stoixeia gia to profile tou kai alles plirofories
 if ($user->session_status()){
     require('injecthtml/navbar.php');
-    echo "<div style=\"color: red;\">Succesfull Login</div>";
+    //echo "<div style=\"color: red;\">Succesfull Login</div>";
 
     
     if(isset($_POST['btn-logout'])){
     $user->logout();
-
-    
-    
-
     }
 }
 
@@ -42,21 +38,21 @@ if ($user->session_status()){
       </div>
       <div class="row">
           <div class="two-half column">
-            <table class="u-full-width">
-            <thead>
-                <tr>
-                <th>Ονομα</th>
-                <th>email</th>
-                <th>Πτυχιακές υπό επίβλεψη</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td><?php echo($_SESSION['user_info'][name] . " " . $_SESSION['user_info'][surname]) ?> </td>
-                <td><?php echo($_SESSION['user_info'][email]) ?> </td>
-                <td>4</td>
-                </tr>
-            </tbody>
+              <table class="u-full-width">
+              <thead>
+                  <tr>
+                  <th>Ονομα</th>
+                  <th>email</th>
+                  <th>Πτυχιακές υπό επίβλεψη</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                  <td><?php echo($_SESSION['user_info'][name] . " " . $_SESSION['user_info'][surname]) ?> </td>
+                  <td><?php echo($_SESSION['user_info'][email]) ?> </td>
+                  <td>4</td>
+                  </tr>
+              </tbody>
             </table>
           </div>
       </div>

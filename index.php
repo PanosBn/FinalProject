@@ -8,42 +8,61 @@ $error_flag = false;
 
 if(isset($_POST['submit'])) {
     $email = $_POST['email'];
-    $name = $_POST['firstname'] + " " + $_POST['lastname'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $fullname = $_POST['firstname'] + " " + $_POST['lastname'];
     $password = $_POST['password'];
-    $unistatus = $_POST['teacherOrStudent'];
-    echo "submit POST succesfull";
-    print_r($_POST);
+    $unistatus = $_POST['acad_option'];
     
-    if(strlen($_POST['username']) < 5) {
-      $error[] = 'Το username πρέπει να αποτελείται απο τουλάχιστον 5 χαρακτήρες';
-      $error_flag = true;
+    // echo "submit POST succesfull";
+    //print_r($_POST['acad_option']);
+
+    if($firstname == ""){
+      $error[] = "Εισάγετε το όνομα σας";
     }
-    if($_POST['password'] != $_POST['passwordConfirm']){
+    else if($lastname == ""){
+      $error[] = "Εισάγετε το επίθετο σας";
+    }    
+    else if($unistatus == "") {
+      $error[] = 'Εισάγετε την ιδιότητα σας';
+    }
+    else if(strcmp($_POST['password'], $_POST['passwordRe']) !== 0){
 		  $error[] = 'Ο κωδικός δεν είναι σωστός.';
-      $error_flag = true;
   	}
-    if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-	    $error[] = 'Please enter a valid email address';
-      $error_flag = true;
-	  } else {
-      $stmt = $db->prepare('SELECT email FROM members WHERE email = :email');
-      $row = $stmt->execute(array(':email' => $_POST['email']))->fetch(PDO::FETCH_ASSOC);
-      if(!empty($row['email'])){
-          $error[] = 'Email provided is already in use.';
-          $error_flag = true;
+    else if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+	    $error[] = 'Το email σας δεν είναι έγκυρο';
+	  } 
+    else{
+      if ($user->searchEmail($email)){
+        try{
+          $prof = "Καθηγητής";
+          $stud = "Φοιτητής";
+          if ( strcmp($unistatus,$stud) == 0){
+             $unistatus = "student";
+          }else{
+             $unistatus = "professor";
+          }
+          if($user->register($firstname,$lastname,$password,$email,$unistatus));{
+            header("Location: landingpage.php" );
+          }
+        }catch(Exception $exc){
+          echo $exc->getMessage();
+        }
+      }
+      else{
+        $error[] = 'Το email αυτό δεν είναι διαθέσιμο';
       }
     }
-  // } else{
-  //   $check_name_query = $db->prepare('select username from registered where username = :firstname');
-  //   $check_name_query->execute(array(':username' => $_POST['firstname']));
-  //   $row = $check_name_query->fetch(PDO::FETCH_ASSOC);
-  //   if(!empty($row['firstname'])) {
-  //       $error[] = 'Username is currently in use';
-  //   }
-  }
+}
 
 $title = 'Signup';
 require('injecthtml/header.php');
+
+
+/*
+
+
+*/
 
 ?>
 
@@ -62,6 +81,17 @@ require('injecthtml/header.php');
       <div class="row">
         <div class="two-half column">
           <h2 class="pagePurpose">Συμπληρώστε τα στοιχεία σας</h2>
+           <?php
+            if (isset($error)){
+              foreach($error as $error){
+                ?>
+                  <div class="alert">
+                      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times; <?php echo $error; ?> </span> 
+                  </div>
+                  <?php
+              }
+            }
+          ?>
         </div>
       </div>
     </div>
@@ -72,18 +102,13 @@ require('injecthtml/header.php');
           <div class="row">
             <div class="six columns">
               <label for="exampleEmailInput"> Email</label>
-              <input class="u-full-width" type="email" placeholder="name@icsd.aegean.gr" id="exampleEmailInput" ; </div>
-              <?php
-                                if(isset($error_flag)) {
-                                    echo "<div style=\"color: red;\">$error</div>";
-                                }
-                                ?>
+              <input name ="email" class="u-full-width" type="email" placeholder="name@icsd.aegean.gr" id="exampleEmailInput" ; </div>
             </div>
             <div class="six columns">
-              <label for="teacherOrStudent"> Φοιτητής ή Καθηγητής</label>
-              <select class="u-full-width" name = "teacherOrStudent" id="teacherOrStudent">
-                <option name ="student" type ="text" value="Φοιτητής">Φοιτητής</option>
-                <option name ="faculty" type ="text" value="Καθηγητής">Καθηγητής</option>
+              <label for="academic_status"> Φοιτητής ή Καθηγητής</label>
+              <select name = "acad_option" class="u-full-width">
+                <option name ="student" type ="text">Φοιτητής</option>
+                <option name ="faculty" type ="text">Καθηγητής</option>
               </select>
             </div>
           </div>
