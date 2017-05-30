@@ -2,7 +2,7 @@
     <nav class="container topnav">
         <div class="twelve columns">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="../facultypage.php">Home</a></li>
                 <li><a href="actions/submitform.php">Δημιουργία διπλωματικής</a></li>
                 <li><a href="#">Αιτήσεις</a></li>
                 <li><a href="#">Συνομιλίες</a></li>
