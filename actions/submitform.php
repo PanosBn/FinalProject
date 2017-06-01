@@ -7,9 +7,24 @@ if ($user->session_status()){
     require('../injecthtml/navbar.php');
 
     if (isset($_POST['submit'])){
-        if ($professor->submit_thesis()){
-            
+        $titlos = ($_POST['title']);
+        $stoxos = ($_POST['stoxos_diplomatikis']);
+        $perigrafi = ($_POST['perigrafi_diplom']);
+        $mathimata = ($_POST['mathimata']);
+        $gnoseis = ($_POST['gnoseis']);
+        $submitance_date = ($_POST['submitance_date']);
+        $starting_date = ($_POST['starting_date']);
+        $finishing_date = ($_POST['finishing_date']);
+        $number_of_students = ($_POST['number_of_students']);
+
+        //print_r($_POST);
+        if ($user->submit_thesis($titlos,$stoxos,$perigrafi,$mathimata,$gnoseis,$submitance_date,$starting_date,$finishing_date,$number_of_students)){
+            print_r($_POST);
+            echo 'succesfull';
         }
+        // if ( $user->test_query() ){
+        //     echo 'succesfull';
+        // }
     }
      
     if(isset($_POST['btn-logout'])){
@@ -31,14 +46,14 @@ if ($user->session_status()){
                     </div>
                     <div class = "four columns">
                         <label for = "overseeing_prof">Επιβλέπων</label>
-                        <h5 class = "u-full-width" id = "overseeing_prof"><?php print_r($_SESSION['user_info'][name] .' ' .  $_SESSION['user_info'][surname])  ?> </h5>
+                        <h5 class = "u-full-width" id = "overseeing_prof"><?php print_r($_SESSION['user_info'][name] .' ' .  $_SESSION['user_info'][surname] .' ' .$_SESSION['user_info']['email'] )  ?> </h5>
                     </div>
                     <div class = "four columns">
                         <label for = "number_of_students" > Αριθμός Φοιτητών </label>
-                        <select class = "u-full-width" id = "number_of_students">
-                            <option value ="Option 1"> 1 </option>
-                            <option value ="Option 2"> 2 </option>
-                            <option value ="Option 3"> 3 </option>
+                        <select class = "u-full-width" name = "number_of_students" id = "number_of_students">
+                            <option name = "1" value ="Option 1"> 1 </option>
+                            <option name = "2" value ="Option 2"> 2 </option>
+                            <option name = "3" value ="Option 3"> 3 </option>
                         </select>
                     </div>
                 </div>
@@ -52,12 +67,12 @@ if ($user->session_status()){
                 </div>
                 <div class = "row">
                     <label for ="mathimata">Προαπαιτούμενα μαθήματα </label>
-                    <textarea class = "u-full-width"  id = "mathimata" > </textarea>
+                    <textarea class = "u-full-width"  name = "mathimata" id = "mathimata" > </textarea>
                 </div>
             
                 <div class = "row">
                     <label for ="gnoseis">Προαπαιτούμενες Γνώσεις </label>
-                    <textarea class = "u-full-width"  id = "gnoseis" > </textarea>
+                    <textarea class = "u-full-width"  name = "gnoseis" id = "gnoseis" > </textarea>
                 </div>
                 <div class = "row">
                     <div class = "four columns">

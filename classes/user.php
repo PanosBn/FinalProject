@@ -73,6 +73,52 @@ class User{
                 echo 'Problemo: ' . $exc->getMessage();
                 echo $conn->errorCode();
                 echo $conn->errorInfo();
+
+        }
+    }
+
+    public function submit_thesis($titlos,$stoxos,$perigrafi,$mathimata,$gnoseis,$submited,$started,$finalized,$number_of_students){
+
+
+        
+        try{
+            $stmt = $this->conn->prepare('INSERT INTO thesis(name,stoxos,perigrafi,mathimata,gnoseis,submited,number_of_students,started,finalized,faculty_id)
+                                                 VALUES (:titlos, :stoxos, :perigrafi, :mathimata, :gnoseis, :submited, :number_of_students, :started, :finalized, :faculty_id)');
+
+            $uid = $_SESSION['user_id'];
+            $stmt->bindparam(":titlos", $titlos);
+            $stmt->bindparam(":stoxos", $stoxos);
+            $stmt->bindparam(":perigrafi", $perigrafi);
+            $stmt->bindparam(":mathimata", $mathimata);
+            $stmt->bindparam(":gnoseis", $gnoseis);
+            $stmt->bindparam(":submited", $submited);
+            $stmt->bindparam(":number_of_students", $number_of_students);
+            $stmt->bindparam(":started", $started);
+            $stmt->bindparam(":finalized", $finalized);
+            $stmt->bindparam(":faculty_id", $uid);
+
+            $stmt->execute();
+            
+            } catch (PDOException $exc){
+                echo 'Problemo: ' . $exc->getMessage();
+                echo $conn->errorCode();
+                echo $conn->errorInfo();
+        }
+    }
+
+    public function thesis_list(){
+
+        try{
+            $stmt = $this->conn->prepare('SELECT * FROM thesis where thesis.faculty_id = :uid');
+            $uid = $_SESSION['user_id'];
+            $stmt->execute(array('uid'=>$uid));
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            
+        } catch (PDOException $exc){
+            echo 'Problemo' . $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
+
         }
     }
 

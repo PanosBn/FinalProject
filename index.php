@@ -1,5 +1,7 @@
 <?php
 require_once('config.php');
+require_once ('classes/student.php');
+require_once ('classes/professor.php');
 
 /*if ($user->is_logged_in() ){ //An o xristis uparxei kai exei kanei login tote automata ginetai redirect stin kentriki selida
     header('Location: memberpage.php');
@@ -39,11 +41,13 @@ if(isset($_POST['submit'])) {
           $stud = "Φοιτητής";
           if ( strcmp($unistatus,$stud) == 0){
              $unistatus = "student";
-             $student->register($firstname,$lastname,$password,$email,$unistatus);
+            //  $student = new student();
+             $user->register($firstname,$lastname,$password,$email,$unistatus);
              header("Location: landingpage.php" );
           }else{
              $unistatus = "professor";
-             $professor->register($firstname,$lastname,$password,$email,$unistatus);
+            //  $professor = new professor();
+             $user->register($firstname,$lastname,$password,$email,$unistatus);
              header("Location: landingpage.php" );
           }
           // if($user->register($firstname,$lastname,$password,$email,$unistatus));{
@@ -62,11 +66,6 @@ if(isset($_POST['submit'])) {
 $title = 'Signup';
 require('injecthtml/header.php');
 
-
-/*
-
-
-*/
 
 ?>
 
