@@ -5,24 +5,29 @@ require('../injecthtml/header.php');
 
 if ($user->session_status()){
     require('../injecthtml/navbar.php');
+
+    if (isset($_POST['submit'])){
+        if ($professor->submit_thesis()){
+            
+        }
+    }
      
     if(isset($_POST['btn-logout'])){
     $user->logout();
     }
 }
 ?>
-<script type="text/javascript" src="javascript/courses.js"></script>
 
 <div class = "thesis_form">
         <h2 class="pagePurpose">Δημιουργία διπλωματικής εργασίας</h2>
 
-        <div class = "container">
+        <div class = "container" style = "margin-bottom: 50px;">
         <section class = "section-thesis">
         <form method = "post" action = "">
                 <div class = "row">
                     <div class = "four columns" >
                         <label for ="thesis_title">Τίτλος διπλωματικής</label>
-                        <input class = "u-full-width" name = "title" type ="text" placeholder="Τίτλος" id = "thesis_title">
+                        <input class = "u-full-width" name = "title" type ="text" id = "thesis_title">
                     </div>
                     <div class = "four columns">
                         <label for = "overseeing_prof">Επιβλέπων</label>
@@ -39,69 +44,20 @@ if ($user->session_status()){
                 </div>
                 <div class = "row">
                     <label for ="stoxos_diplomatikis">Στόχος διπλωματικής </label>
-                    <textarea  class = "u-full-width" placeholder = "Στόχοι..." name = "stoxos_diplomatikis" id = "stoxos_diplomatikis" > </textarea>
+                    <textarea  class = "u-full-width"  name = "stoxos_diplomatikis" id = "stoxos_diplomatikis" > </textarea>
                 </div>
                 <div class = "row">
                     <label for ="perigrafi_diplomatikis">Περιγραφή διπλωματικής </label>
-                    <textarea style="height: 150px;" class = "u-full-width" placeholder = "Μια σύντομη περιγραφή..." name = "perigrafi_diplom" id = "perigrafi_diplomatikis" > </textarea>
+                    <textarea style="height: 150px;" class = "u-full-width" name = "perigrafi_diplom" id = "perigrafi_diplomatikis" > </textarea>
                 </div>
                 <div class = "row">
                     <label for ="mathimata">Προαπαιτούμενα μαθήματα </label>
-                    <ul>
-                        <li class="dropdown">
-                        <a href="#" data-toggle="dropdown">First Menu <i class="icon-arrow"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                        </li>
-                        <li class="dropdown">
-                        <a href="#" data-toggle="dropdown">Second Menu <i class="icon-arrow"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                        </li>
-                        <li class="dropdown">
-                        <a href="#" data-toggle="dropdown">Third Menu <i class="icon-arrow"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Services</a></li>
-                            <li><a href="#">Contact</a></li>
-                        </ul>
-                        </li>
-                    </ul>
-                    <!--<ul id = "mathimata">
-                        <li> 
-                            5ο Εξάμηνο
-                            <ul>
-                                <ul>Κατανεμημένα συστήματα</ul>
-                                <ul>Αλγόριθμοι και πολυπλοκότητα</ul>
-                                <ul>Αρχιτεκτονική Υπολογιστών</ul>
-                                <ul>Τηλεπικοινωνίες</ul>
-                                <ul>Υπολογιστική λογική και Λογικός προγραμματισμός</ul>
-                            </ul>
-                        </li>
-                        <li>
-                            8ο Εξάμηνο
-                            <ul>
-                                <ul>Πιθανότητες και στατιστική</ul>
-                                <ul>Αγγλικα 2</ul>
-                                <ul>Σήματα και Συστήματα</ul>
-                                <ul>Ψηφιακές Επικοινωνίες</ul>
-                                <ul>Βάσεις Δεδομένων 2</ul>
-                            </ul>
-                        </li>
-                    </ul>-->
+                    <textarea class = "u-full-width"  id = "mathimata" > </textarea>
                 </div>
+            
                 <div class = "row">
                     <label for ="gnoseis">Προαπαιτούμενες Γνώσεις </label>
-                    <textarea class = "u-full-width" placeholder = "Μια σύντομη περιγραφή..." id = "gnoseis" > </textarea>
+                    <textarea class = "u-full-width"  id = "gnoseis" > </textarea>
                 </div>
                 <div class = "row">
                     <div class = "four columns">

@@ -2,7 +2,7 @@
 
 class User{
 
-    private $conn;
+    public $conn;
 
     function __construct($db){
         $this->conn = $db;
@@ -15,6 +15,7 @@ class User{
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 if ($stmt->rowCount() > 0){
                     $_SESSION['user_info'] = $row;
+                    $_SESSION['user_id'] = $row['uid'];
                     $_SESSION["user_flag"] = true;
                     $_SESSION["unistatus"] = $row['unistatus'];
                     return true;

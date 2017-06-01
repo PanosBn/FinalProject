@@ -39,12 +39,16 @@ if(isset($_POST['submit'])) {
           $stud = "Φοιτητής";
           if ( strcmp($unistatus,$stud) == 0){
              $unistatus = "student";
+             $student->register($firstname,$lastname,$password,$email,$unistatus);
+             header("Location: landingpage.php" );
           }else{
              $unistatus = "professor";
+             $professor->register($firstname,$lastname,$password,$email,$unistatus);
+             header("Location: landingpage.php" );
           }
-          if($user->register($firstname,$lastname,$password,$email,$unistatus));{
-            header("Location: landingpage.php" );
-          }
+          // if($user->register($firstname,$lastname,$password,$email,$unistatus));{
+          //   header("Location: landingpage.php" );
+          // }
         }catch(Exception $exc){
           echo $exc->getMessage();
         }
