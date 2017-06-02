@@ -10,7 +10,7 @@ if (!$user->session_status()){
 
 //An o xristis sundethei me epituxia tote emfanizetai to navigation bar, stoixeia gia to profile tou kai alles plirofories
 if ($user->session_status()){
-    require('injecthtml/navbar.php');
+    require('navbar.php');
     //echo "<div style=\"color: red;\">Succesfull Login</div>";
 
     
