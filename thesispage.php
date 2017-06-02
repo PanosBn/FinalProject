@@ -64,14 +64,25 @@ if ($user->session_status()){
                                 <th>Κατάσταση</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class = "styled-row">
                             <?php
                             foreach ( $row as $r){
+                                if ( $r['status'] == 1){
+                                    $status ='Χωρίς Ανάθεση';
+                                }else if ( $r['status'] == 2){
+                                    $status ="Υπό έγκριση";
+                                }else if ( $r['status'] == 3){
+                                    $status ="Εχει ανατεθεί";
+                                }else if ( $r['status'] == 4){
+                                    $status ="Παρουσίαση";
+                                }else if ( $r['status'] == 5){
+                                    $status ="Ολοκληρωμένη";
+                                }
                                 echo "<tbody>";
                                 echo "<tr>";
                                 echo "<td>" . $r['name'] . "</td>";
                                 echo "<td>" . $r['perigrafi'] . "</td>";
-                                echo "<td>" . $r['status'] . "</td>";
+                                echo "<td>" .$status. "</td>";
                                 echo "</tr>";
                                 echo "</tbody>";
                             }
