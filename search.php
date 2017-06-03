@@ -1,49 +1,27 @@
 <?php
 
-$conn = null;
+require_once('config.php');
 
-try {
-
-    
-    $conn = new PDO('mysql:host=localhost;dbname=icsd', "panos1", "panos1");
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch(PDOException $exc) {
-    //show error
-    echo '<p class="bg-danger">'.$exc->getMessage().'</p>';
-    echo $conn->errorCode();
-    echo $conn->errorInfo();
-    exit;
-}
-
-        try{
-            $stmt = $conn->prepare('CREATE TABLE thesis (
-                                            id Int PRIMARY KEY AUTO_INCREMENT,
-                                            name VARCHAR(30),
-                                            stoxos text,
-                                            perigrafi text,
-                                            mathimata text,
-                                            gnoseis text,
-                                            submited date,
-                                            number_of_students int,
-                                            started date,
-                                            finalized date,
-                                            faculty_id Int,
-                                            stud_1 int NULL,
-                                            stud_2 int NULL,
-                                            stud_3 int NULL,
-                                            foreign key (faculty_id) references user(uid) on delete cascade on update cascade,
-                                            foreign key (stud_1) references user(uid) on delete cascade on update cascade,
-                                            foreign key (stud_2) references user(uid) on delete cascade on update cascade,
-                                            foreign key (stud_3) references user(uid) on delete cascade on update cascade)');
+try{
+            if (isset($_REQUEST['ajax_request'])){
+            $stmt = $conn->prepare('SELECT * FROM thesis where title LIKE "%":ajax_request"%" ');
+            $search_term = $_REQUEST['ajax_request'] . '%';
+            $stmt->bindparam(":ajax_request",$search_term);
             $stmt->execute();
-        }
-        catch (PDOException $exc){
-                echo 'Problemo: ' . $exc->getMessage();
-                echo $conn->errorCode();
-                echo $conn->errorInfo();
-        }
+            if($stmt->rowCount() > 0){
+                while($row = $stmt->fetch()){
+                    echo "<p>" . $row['name'] . "</p>";
+                }
+            }
+            
+            }else {
+                echo "<p> Δεν βρέθηκε κάποια εργασία </p>";
+            }
+        }catch (PDOException $exc){
+            echo 'Problemo' . $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
 
-echo json_encode($res);
+        }
 
 ?>

@@ -166,3 +166,11 @@ body{
     z-index: 999;
 }
 
+.result p{
+    border: 1px solid #424242;
+}
+
+.search-by-title input[type="text"] .result{
+    width : 100%;
+    box-sizing: border-box;
+}
