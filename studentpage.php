@@ -50,7 +50,7 @@ if ($user->session_status()){
                   <tr>
                   <td><?php echo($_SESSION['user_info'][name] . " " . $_SESSION['user_info'][surname]) ?> </td>
                   <td><?php echo($_SESSION['user_info'][email]) ?> </td>
-                  <td>Χωρίς ανάθεση</td>
+                  <td>Χωρίς πτυχιακή</td>
                   </tr>
               </tbody>
             </table>

@@ -151,3 +151,18 @@ body{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
+.search-by-title{
+    display: inline-block;
+    width : 400px;
+}
+
+.search-by-title input[type="text"]{
+    border: 1px solid #424242;
+    font-size: 13px;
+}
+
+.result{
+    top:100%;
+    z-index: 999;
+}
+

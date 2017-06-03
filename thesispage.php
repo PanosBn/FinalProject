@@ -24,36 +24,13 @@ if ($user->session_status()){
 
         }
     }else{
-        require('navbar_student.php');
+        Header("Location: diathesimes.php");
     }
 }
 
 
 ?>
 
-    <script>
-        $(document).ready(function () {
-            $("#flip").click(function () {
-                $("#panel").slideToggle("slow");
-            });
-        });
-
-    </script>
-
-    <style>
-        #panel,
-        #flip {
-            padding: 5px;
-            text-align: center;
-            background-color: #e5eecc;
-            border: solid 1px #c3c3c3;
-        }
-        
-        #panel {
-            padding: 50px;
-            display: none;
-        }
-    </style>
 
     <div class="ongoing-thesis-list">
         <h2 class="pagePurpose">Τρέχουσες Διπλωματικές Εργασίες</h2>
