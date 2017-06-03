@@ -50,7 +50,28 @@ if ($user->session_status()){
                   <tr>
                   <td><?php echo($_SESSION['user_info'][name] . " " . $_SESSION['user_info'][surname]) ?> </td>
                   <td><?php echo($_SESSION['user_info'][email]) ?> </td>
-                  <td>4</td>
+                  <?php
+                    try{
+                        $stmt = $conn->prepare('SELECT * FROM thesis where thesis.faculty_id = :uid');
+                        $uid = $_SESSION['user_id'];
+                        $stmt->execute(array('uid'=>$uid));
+
+                        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        $count = 0;
+                        foreach ($row as $r){
+                          $count = $count+1;
+                        }
+                        //$_SESSION['thesis-list'] = $row;
+                        //print_r($row);
+                        
+            
+                    } catch (PDOException $exc){
+                        echo 'Problemo' . $exc->getMessage();
+                        echo $conn->errorCode();
+                        echo $conn->errorInfo();
+                    }               
+                  echo "<td>" .$count."</td>";
+                   ?>
                   </tr>
               </tbody>
             </table>

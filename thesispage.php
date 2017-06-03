@@ -4,6 +4,7 @@ require_once('config.php');
 require('injecthtml/header.php');
 
 if ($user->session_status()){
+    if ($_SESSION["unistatus"] == "professor"){
     require('navbar.php');
         try{
             $stmt = $conn->prepare('SELECT * FROM thesis where thesis.faculty_id = :uid');
@@ -22,6 +23,9 @@ if ($user->session_status()){
             echo $conn->errorInfo();
 
         }
+    }else{
+        require('navbar_student.php');
+    }
 }
 
 
