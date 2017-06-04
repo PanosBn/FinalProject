@@ -2,6 +2,12 @@
 
 require_once('config.php');
 
+ if (isset($POST['search'])){
+     print_r($POST['search']);
+ }else{
+     echo 'Problemo';
+ }
+
 try{
             if (isset($_REQUEST['ajax_request'])){
             $stmt = $conn->prepare('SELECT * FROM thesis where title LIKE "%":ajax_request"%" ');
@@ -23,5 +29,6 @@ try{
             echo $conn->errorInfo();
 
         }
+
 
 ?>
