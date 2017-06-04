@@ -122,6 +122,27 @@ class User{
         }
     }
 
+    public function thesis_enquiry($thesis_id,$faculty_id){
+
+        try{
+            $stmt = $this->conn->prepare('INSERT INTO thesis_enquiry(thesis_id,faculty_id,stud_id)
+                                                      VALUES (:thesis_id, :faculty_id, :stud_id)');
+            $stud_id = $_SESSION['user_id'];
+            $stmt->bindparam(":thesis_id", $thesis_id);
+            $stmt->bindparam(":faculty_id", $faculty_id);
+            $stmt->bindparam(":stud_id", $stud_id);
+
+            $stmt->execute();
+
+            return $stmt;
+        }
+        catch (PDOException $exc){
+            echo 'Problemo: ' . $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
+        }
+    }
+
     public function logout(){
 
         session_destroy();

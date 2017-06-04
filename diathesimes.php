@@ -12,7 +12,12 @@ if ($user->session_status()){
     }
 
     if (isset($_POST['enquiry'])){
-
+        $tmp_faculty_id = $_POST['faculty_id'];
+        $tmp_thesis_id = $_POST['thesis_id'];
+        echo $tmp_faculty_id;
+        echo '<br />';
+        echo $tmp_thesis_id;
+        //$user->thesis_enquiry($tmp_thesis_id,$tmp_faculty_id);
     }
 }
 ?>
@@ -36,6 +41,8 @@ if ($user->session_status()){
                                         <th>Ονομα</th>
                                         <th>Περιγραφή</th>
                                         <th>Κατάσταση</th>
+                                        <th>Κωδικός</th>
+                                        <th>Κωδικός Καθηγητή</th>                                    
                                         <th>Αίτηση</th>
                                     </tr>
                                 </thead>
@@ -67,21 +74,18 @@ if ($user->session_status()){
 
                                                 $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+                                                    if (count($row) == 0) {
+                                                    $stmt = $conn->prepare('SELECT * FROM thesis where mathimata LIKE "%":search_term"%"');
+                                                    $search_term =$_POST['search_term'];
+                                                    $stmt->bindparam(":search_term",$search_term);
+                                                    $stmt->execute();
+
+                                                    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                                    
+                                                    }                                                
                                                 }
-
-                                                if (count($row) == 0) {
-                                                $stmt = $conn->prepare('SELECT * FROM thesis where mathimata LIKE "%":search_term"%"');
-                                                $search_term =$_POST['search_term'];
-                                                $stmt->bindparam(":search_term",$search_term);
-                                                $stmt->execute();
-
-                                                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                                
-                                                }
-
                                             } 
-                                            
-                                
+                                                                           
                                         } catch (PDOException $exc){
                                             echo 'Problemo' . $exc->getMessage();
                                             echo $conn->errorCode();
@@ -97,7 +101,10 @@ if ($user->session_status()){
                                             echo "<td>" . $r['name'] . "</td>";
                                             echo "<td>" . $r['perigrafi'] . "</td>";
                                             echo "<td>" .$status. "</td>";
+
                                             ?>
+                                            <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
+                                            <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>
                                             <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση"></td>
                                             <?php
                                             echo "</tr>";

@@ -13,7 +13,25 @@ if ($user->session_status()){
     require('navbar_student.php');
     //echo "<div style=\"color: red;\">Succesfull Login</div>";
 
-    
+    try{
+      $uid = $_SESSION['user_id'];
+      $stmt = $conn->prepare('SELECT faculty_id FROM accepted_thesis where accepted_thesis.stud_id = :uid');
+      $stmt->execute(array('uid'=>$uid));
+      //Elegxos gia to an uparxei ptuxiakh pou exei ginei dekti apo ton kathigiti
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+      //An uparxei tote vres kai ta upoloipa meli se periptosi pou uparxoun
+       if (count($row) == 0) {
+          $thesis = false;
+       }else{
+          $stmt = $conn->prepare('SELECT * FROM accepted_thesis where ');
+       }
+
+
+    }catch(PDOException $exc){
+      echo $exc->getMessage();
+      echo $conn->errorCode();
+      echo $conn->errorInfo();
+    }
     if(isset($_POST['btn-logout'])){
     $user->logout();
     }
@@ -55,6 +73,37 @@ if ($user->session_status()){
               </tbody>
             </table>
           </div>
+      </div>
+      <div class = "row">
+        <h2 class="pagePurpose"> Πτυχιακή Εργασία </h2>
+        <div class = "two-half column">
+
+          <table class="card u-full-width">
+          <thead>
+            <tr>
+              <th>Ονομα</th>
+              <th>Περιγραφή</th>
+              <th>Κατάσταση</th>
+              <th>Αίτηση</th>
+            </tr>
+          </thead>
+            <tbody class = "styled-row">
+          <?php
+            foreach ( $row as $r){
+                    echo "<tbody>";
+                    echo "<tr>";
+                    echo "<td>" . $r['name'] . "</td>";
+                    echo "<td>" . $r['perigrafi'] . "</td>";
+                    echo "<td>" .$status. "</td>";
+          ?>
+              <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση"></td>
+          <?php
+              echo "</tr>";
+              echo "</tbody>";                                                                       
+              }
+          ?>
+        </table>
+        </div>
       </div>
     </div>
 </section>
