@@ -11,16 +11,19 @@ if ($user->session_status()){
         Header("Location: thesispage.php");
     }
 
-    if (isset($_POST['enquiry'])){
-        $tmp_faculty_id = $_POST['faculty_id'];
-        $tmp_thesis_id = $_POST['thesis_id'];
-        echo $tmp_faculty_id;
-        echo '<br />';
-        echo $tmp_thesis_id;
-        //$user->thesis_enquiry($tmp_thesis_id,$tmp_faculty_id);
-    }
+    // if (isset($_GET["w1"]) && isset($_GET["w2"])) {
+
+    //     $tmp_thesis_id = $_GET["w1"];
+    //     $tmp_faculty_id = $_GET["w2"];
+    //     echo $tmp_faculty_id;
+    //     echo '<br />';
+    //     echo $tmp_thesis_id;
+    //     //$user->thesis_enquiry($tmp_thesis_id,$tmp_faculty_id);
+    // }
 }
 ?>
+
+
 
     <div class="ongoing-thesis-list">
         <h2 class="pagePurpose">Τρέχουσες Διπλωματικές Εργασίες</h2>
@@ -35,7 +38,7 @@ if ($user->session_status()){
                         <br />
                         <div id = "result" name = "result" placeholde = "Αποτέλεσμα..." ></div>
 
-                            <table class="card u-full-width">
+                            <table id ="tableId" class="card u-full-width">
                                 <thead>
                                     <tr>
                                         <th>Ονομα</th>
@@ -105,12 +108,37 @@ if ($user->session_status()){
                                             ?>
                                             <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
                                             <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>
-                                            <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση"></td>
+                                            <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση " onclick="addRowHandlers()"></td>
                                             <?php
                                             echo "</tr>";
                                             echo "</tbody>";
                                         }
                                     ?>
+                                    <script language="javascript">
+                                    function addRowHandlers() {
+                                        var table = document.getElementById("tableId");
+                                        var rows = table.getElementsByTagName("tr");
+                                        for (i = 0; i < rows.length; i++) {
+                                            var currentRow = table.rows[i];
+                                            var createClickHandler = 
+                                                function(row) 
+                                                {
+                                                    return function() { 
+                                                                            var cell_1 = row.getElementsByTagName("td")[3];
+                                                                            var cell_2 = row.getElementsByTagName("td")[4];
+                                                                            var thesis_id = cell_1.innerHTML;
+                                                                            var faculty_id = cell_2.innerHTML;
+                                                                            alert("id_1:" + thesis_id);
+                                                                            alert("id_2:" + faculty_id);
+                                                                            window.location.href = "session_init.php?w1=" + thesis_id + "&w2=" + faculty_id;
+
+                                                                    };
+                                                };
+
+                                            currentRow.onclick = createClickHandler(currentRow);
+                                        }
+                                    }
+                                    </script>
                                     </form>
                             </table>
                 </div>
