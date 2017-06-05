@@ -102,10 +102,8 @@ if ($user->session_status()){
                                             }
                                             echo "<tbody>";
                                             echo "<tr>";
-                                            echo "<td>" . $r['name'] . "</td>";
-                                            echo "<td>" . $r['perigrafi'] . "</td>";
-                                            echo "<td>" .$status. "</td>";
-
+                                            echo "<td>" . $r['thesis_id'] . "</td>";
+                                            echo "<td>" . $r['faculty_id'] . "</td>";
                                             ?>
                                             <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
                                             <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>

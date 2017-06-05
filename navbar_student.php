@@ -4,7 +4,7 @@
             <ul>
                 <li><a href="studentpage.php">Home</a></li>
                 <li><a href="thesispage.php">Διαθέσιμες Διπλωματικές</a></li>
-                <li><a href="#">Αιτήσεις</a></li>
+                <li><a href="enquiries.php">Αιτήσεις</a></li>
                 <li><a href="#">Συνομιλίες</a></li>
                 <li><a href="#">Στατιστικά</a></li>
             </ul>
