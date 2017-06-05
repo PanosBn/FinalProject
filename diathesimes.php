@@ -98,6 +98,7 @@ if ($user->session_status()){
                                         foreach ( $row as $r){
                                             if ( $r['status'] == 1){
                                                 $status ='Χωρίς Ανάθεση';
+                                                $thesis_id = $r['id'];
                                             }
                                             echo "<tbody>";
                                             echo "<tr>";
@@ -108,7 +109,8 @@ if ($user->session_status()){
                                             ?>
                                             <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
                                             <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>
-                                            <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση " onclick="addRowHandlers()"></td>
+                                            <!--<td><input class="button-primary" name ="enquiry" type = "submit" href = "session_init.php?thesis_id<?php echo $thesis_id ?>" value="Αίτηση "></td>-->
+                                            <td><a class="button button-primary" name ="enquiry" value="Αίτηση " onclick="addRowHandlers()"></td>
                                             <?php
                                             echo "</tr>";
                                             echo "</tbody>";
@@ -128,13 +130,12 @@ if ($user->session_status()){
                                                                             var cell_2 = row.getElementsByTagName("td")[4];
                                                                             var thesis_id = cell_1.innerHTML;
                                                                             var faculty_id = cell_2.innerHTML;
-                                                                            alert("id_1:" + thesis_id);
-                                                                            alert("id_2:" + faculty_id);
-                                                                            window.location.href = "session_init.php?w1=" + thesis_id + "&w2=" + faculty_id;
-
+                                                                            // alert("id_1:" + thesis_id);
+                                                                            // alert("id_2:" + faculty_id);
+                                                                            var number = 1245;
+                                                                            window.location = "session_init.php?thesis_id="+thesis_id+"&faculty_id="+faculty_id;
                                                                     };
                                                 };
-
                                             currentRow.onclick = createClickHandler(currentRow);
                                         }
                                     }
