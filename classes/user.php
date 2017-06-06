@@ -144,7 +144,7 @@ class User{
         }
     }
 
-    public function file_upload($filename,$file_user){
+    public function file_upload($filename,$file_use){
 
           try{
             $stmt = $this->conn->prepare('INSERT INTO files(name,uid,file_use)
