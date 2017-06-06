@@ -13,9 +13,7 @@ if ($user->session_status()){
         $stmt->bindparam(":uid", $uid);
         
         $stmt->execute();
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        //print_r($row);
-       
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);       
 
     }catch(PDOException $exc){
         echo 'Problem' . $exc->getMessage();
@@ -38,7 +36,7 @@ if ($user->session_status()){
         <div class="container">
             <div class="row">
                 <section class="thesis-list">
-                    <table class="card u-full-width">
+                    <table id="tableId" class="card u-full-width">
                         <thead>
                             <tr>
                                 <th>Τίτλος Πτυχιακής</th>
@@ -58,26 +56,26 @@ if ($user->session_status()){
                                     $stmt->bindparam(":uid",$student_id);
                                     $stmt->execute();
                                     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                                    $filename = $res['name'];
-                                    print_r($res);
-                                    echo "<br />";
+
+                                    
                                 }catch(PDOException $exc){
                                     echo 'Problem: ' . $exc->getMessage();
                                     echo $conn->errorCode();
                                     echo $conn->errorInfo();
                                 }
-
+                                    $filename = $res[0]['name'];
+                                    echo "<br />";
+                                    echo "<br />";
                                 echo "<tbody>";
                                 echo "<tr>";
                                 echo "<td>" . $r['name'] . "</td>";
                                 echo "<td>" . $student_id . "</td>";
                                 echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
                                 echo "<td>" . "<a class=' button button-primary '>Αποδοχή <a/> </td>";
-                                //echo "<td>" .$cv. "</td>";
                                 echo "</tr>";
                                 echo "</tbody>";
                             }
-                            ?> 
+                            ?>
                     </table>
                 </section>
             </div>
