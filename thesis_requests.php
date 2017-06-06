@@ -63,15 +63,19 @@ if ($user->session_status()){
                                     echo $conn->errorCode();
                                     echo $conn->errorInfo();
                                 }
-                                    $filename = $res[0]['name'];
+                                    if ($stmt->rowCount() > 0){
+                                        $filename = $res[0]['name'];
+                                        }
                                     echo "<br />";
                                     echo "<br />";
                                 echo "<tbody>";
                                 echo "<tr>";
                                 echo "<td>" . $r['name'] . "</td>";
                                 echo "<td>" . $student_id . "</td>";
-                                echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
-                                echo "<td>" . "<a class=' button button-primary '>Αποδοχή <a/> </td>";
+                                if (isset($filename)){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
+                                    echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
+                                }
+                                echo "<td>" . "<a class=' button button-primary' href=accept_student.php?student_id=".$student_id.">Αποδοχή <a/> </td>";
                                 echo "</tr>";
                                 echo "</tbody>";
                             }
