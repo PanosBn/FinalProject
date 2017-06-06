@@ -110,7 +110,7 @@ if ($user->session_status()){
                                             <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
                                             <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>
                                             <!--<td><input class="button-primary" name ="enquiry" type = "submit" href = "session_init.php?thesis_id<?php echo $thesis_id ?>" value="Αίτηση "></td>-->
-                                            <td><a class="button button-primary" name ="enquiry" value="Αίτηση " onclick="addRowHandlers()"></td>
+                                            <td><a class="button button-primary" name ="enquiry" value="Αίτηση " onclick="addRowHandlers()">Αίτηση</td>
                                             <?php
                                             echo "</tr>";
                                             echo "</tbody>";

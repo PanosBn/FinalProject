@@ -52,10 +52,25 @@ if ($user->session_status()){
                                 $student_id = $r['uid'];
                                 //elegxos gia to an o xristis exei anartisei to CV tou 
                                 try{
-                                    $stmt=$conn->prepare('Select * from files where files.uid = :uid AND files.file_use like "cv" ');
-                                    $stmt->bindparam(":uid",$student_id);
+                                    $stmt = $conn->prepare('Select filename from files where files.uid = :uid');
+                                    $stmt->bindparam(":uid", $student_id);
                                     $stmt->execute();
                                     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    
+                                    if ( $stmt->rowCount() > 0){
+                                        $stmt = $conn->prepare('Select cv from thesis_enquiry where thesis_enquiry.stud_id = :uid');
+                                        $stmt->bindparam(":uid", $student_id);
+                                        $stmt->execute();
+                                        $res2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        if ($stmt->rowCount() > 0){
+                                            $filename = $res[0]['name'];
+                                            $filename_exists = true;
+                                        }
+
+                                    }else{
+                                        $filename_exists = false;
+                                    }
+
 
                                     
                                 }catch(PDOException $exc){
@@ -63,17 +78,17 @@ if ($user->session_status()){
                                     echo $conn->errorCode();
                                     echo $conn->errorInfo();
                                 }
-                                    if ($stmt->rowCount() > 0){
-                                        $filename = $res[0]['name'];
-                                        }
+
                                     echo "<br />";
                                     echo "<br />";
                                 echo "<tbody>";
                                 echo "<tr>";
                                 echo "<td>" . $r['name'] . "</td>";
                                 echo "<td>" . $student_id . "</td>";
-                                if (isset($filename)){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
+                                if ($filename_exists == true){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
                                     echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
+                                }else {
+                                    echo "<td> &nbsp;</td>"; 
                                 }
                                 echo "<td>" . "<a class=' button button-primary' href=accept_student.php?student_id=".$student_id.">Αποδοχή <a/> </td>";
                                 echo "</tr>";

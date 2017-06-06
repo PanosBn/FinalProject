@@ -147,7 +147,7 @@ class User{
     public function file_upload($filename,$file_use){
 
           try{
-            $stmt = $this->conn->prepare('INSERT INTO files(name,uid,file_use)
+            $stmt = $this->conn->prepare('INSERT INTO files(filename,uid,file_use)
                                                       VALUES (:filename, :uid, :file_use)');
             $uid = $_SESSION['user_id'];
             $stmt->bindparam(":filename", $filename);
@@ -156,6 +156,16 @@ class User{
 
             $stmt->execute();
 
+            if (strcmp($file_use,"cv") == 0){
+                
+                $stmt_set_cv = $this->conn->prepare('UPDATE thesis_enquiry SET cv = true where thesis_enquiry.stud_id = :uid');
+                $stmt_set_cv->bindparam(":uid",$uid);
+                $stmt_set_cv->execute();
+                
+            }else{
+                echo "Den ananewthike to CV";
+            }
+            
             return $stmt;
         }
         catch (PDOException $exc){
