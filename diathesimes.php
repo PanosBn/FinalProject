@@ -102,8 +102,10 @@ if ($user->session_status()){
                                             }
                                             echo "<tbody>";
                                             echo "<tr>";
-                                            echo "<td>" . $r['thesis_id'] . "</td>";
-                                            echo "<td>" . $r['faculty_id'] . "</td>";
+                                            echo "<td>" . $r['name'] . "</td>";
+                                            echo "<td>" . $r['perigrafi'] . "</td>";
+                                            echo "<td>" .$status. "</td>";
+
                                             ?>
                                             <td name = "thesis_id"> <?php echo $r['id'] ?> </td>
                                             <td name = "faculty_id"> <?php echo $r['faculty_id'] ?> </td>
@@ -124,14 +126,16 @@ if ($user->session_status()){
                                                 function(row) 
                                                 {
                                                     return function() { 
-                                                                            var cell_1 = row.getElementsByTagName("td")[3];
-                                                                            var cell_2 = row.getElementsByTagName("td")[4];
-                                                                            var thesis_id = cell_1.innerHTML;
+                                                                            var cell_1 = row.getElementsByTagName("td")[3]; //keli me ton kwdiko ptyxiakis
+                                                                            var cell_2 = row.getElementsByTagName("td")[4]; //keli me ton kwdiko tou kathigiti 
+                                                                            var cell_3 = row.getElementsByTagName("td")[0]   //Keli me to onoma tis ptyxiakis
+                                                                            var thesis_id = cell_1.innerHTML; //Periexomeno (string) twn keliwn
                                                                             var faculty_id = cell_2.innerHTML;
+                                                                            var name = cell_3.innerHTML;
                                                                             // alert("id_1:" + thesis_id);
                                                                             // alert("id_2:" + faculty_id);
                                                                             var number = 1245;
-                                                                            window.location = "session_init.php?thesis_id="+thesis_id+"&faculty_id="+faculty_id;
+                                                                            window.location = "session_init.php?thesis_id="+thesis_id+"&faculty_id="+faculty_id+"&name="+name;
                                                                     };
                                                 };
                                             currentRow.onclick = createClickHandler(currentRow);

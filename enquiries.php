@@ -9,6 +9,7 @@ if ($user->session_status()){
 
 
     }else{
+        $user->logout();
         header("Location: landingpage.php");
     }
 
@@ -25,9 +26,9 @@ if ($user->session_status()){
                     <table id="tableId" class="card u-full-width">
                         <thead>
                             <tr>
+                                <th>Τίτλος Πτυχιακής</th>
                                 <th>Κωδικός Πτυχιακής</th>
                                 <th>Κωδικός Καθηγητή</th>
-                                <th>Κατάσταση</th>
                             </tr>
                         </thead>
                         <tbody class="styled-row">
@@ -46,15 +47,11 @@ if ($user->session_status()){
                                 echo $conn->errorInfo();
                              }
                                         foreach ( $row as $r){
-                                            // if ( $r['status'] == 1){
-                                            //     $status ='Χωρίς Ανάθεση';
-                                            //     $thesis_id = $r['id'];
-                                            // }
                                             echo "<tbody>";
                                             echo "<tr>";
+                                            echo "<td>" . $r['name'] . "</td>";
                                             echo "<td>" . $r['thesis_id'] . "</td>";
                                             echo "<td>" . $r['faculty_id'] . "</td>";
-                                            echo "<td>" . $r['status'] . "</td>";
                                             echo "</tr>";
                                             echo "</tbody>";
                                         }

@@ -32,9 +32,15 @@ if ($user->session_status()){
       echo $conn->errorCode();
       echo $conn->errorInfo();
     }
+
+
+
+
     if(isset($_POST['btn-logout'])){
     $user->logout();
     }
+}else{
+  header("Location: landingpage.php");
 }
 
 ?>
@@ -103,6 +109,16 @@ if ($user->session_status()){
               }
           ?>
         </table>
+        </div>
+      </div>
+
+      <div class = "row">
+        <h2 class = "pagePurpose"> Προσθήκη βιογραφικού</h2>
+        <div class = "two-half column">
+          <form method="post" action = "upload.php" enctype="multipart/form-data">
+            File: <input type = "file" name = "uploaded_file">
+            <input type="submit" name = "upload">
+          </form>
         </div>
       </div>
     </div>

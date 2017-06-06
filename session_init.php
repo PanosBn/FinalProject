@@ -6,6 +6,10 @@ if (isset($_GET['thesis_id'])){
 
     if (isset($_GET['faculty_id'])){
         $faculty_id = $_GET['faculty_id'];
+
+        if (isset($_GET['name'])){
+            $name = $_GET['name'];
+        }
     }
     echo $_GET['thesis_id'];
     echo " <br />";
@@ -14,7 +18,7 @@ if (isset($_GET['thesis_id'])){
     echo "Success!";
     Header("Location: diathesimes.php" );
 
-    $user->thesis_enquiry($thesis_id,$faculty_id);
+    $user->thesis_enquiry($thesis_id,$faculty_id,$name);
     try{
 
     }catch(PDOException $exc){

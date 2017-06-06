@@ -122,15 +122,37 @@ class User{
         }
     }
 
-    public function thesis_enquiry($thesis_id,$faculty_id){
+    public function thesis_enquiry($thesis_id,$faculty_id,$name){
 
         try{
-            $stmt = $this->conn->prepare('INSERT INTO thesis_enquiry(thesis_id,faculty_id,stud_id)
-                                                      VALUES (:thesis_id, :faculty_id, :stud_id)');
+            $stmt = $this->conn->prepare('INSERT INTO thesis_enquiry(name,thesis_id,faculty_id,stud_id)
+                                                      VALUES (:name, :thesis_id, :faculty_id, :stud_id)');
             $stud_id = $_SESSION['user_id'];
+            $stmt->bindparam(":name", $name);
             $stmt->bindparam(":thesis_id", $thesis_id);
             $stmt->bindparam(":faculty_id", $faculty_id);
             $stmt->bindparam(":stud_id", $stud_id);
+
+            $stmt->execute();
+
+            return $stmt;
+        }
+        catch (PDOException $exc){
+            echo 'Problemo: ' . $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
+        }
+    }
+
+    public function file_upload($filename,$file_user){
+
+          try{
+            $stmt = $this->conn->prepare('INSERT INTO files(name,uid,file_use)
+                                                      VALUES (:filename, :uid, :file_use)');
+            $uid = $_SESSION['user_id'];
+            $stmt->bindparam(":filename", $filename);
+            $stmt->bindparam(":uid", $uid);
+            $stmt->bindparam(":file_use", $file_use);
 
             $stmt->execute();
 

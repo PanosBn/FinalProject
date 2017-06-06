@@ -17,14 +17,11 @@ try {
 }
 
         try{
-            $stmt = $conn->prepare('CREATE TABLE thesis_enquiry (
+            $stmt = $conn->prepare('CREATE TABLE files (
                                             id Int PRIMARY KEY AUTO_INCREMENT,
-                                            thesis_id int NOT NULL,
-                                            faculty_id Int NOT NULL,
-                                            stud_id int NOT NULL,
-                                            foreign key(thesis_id) references thesis(id) on delete cascade on update cascade,
-                                            foreign key (faculty_id) references user(uid) on delete cascade on update cascade,
-                                            foreign key (stud_id) references user(uid) on delete cascade on update cascade)');
+                                            name Varchar(255),
+                                            uid int NOT NULL,
+                                            foreign key (uid) references user(uid) on delete cascade on update cascade)');
             $stmt->execute();
         }
         catch (PDOException $exc){
