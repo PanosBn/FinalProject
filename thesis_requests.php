@@ -43,6 +43,7 @@ if ($user->session_status()){
                                 <th>Τίτλος Πτυχιακής</th>
                                 <th>Κωδικός Φοιτητή</th>
                                 <th>CV φοιτητή</th>
+                                <th>Αναλυτική Βαθμολογία</th>
                                 <th>Αποδοχή</th>
                             </tr>
                         </thead>
@@ -54,23 +55,26 @@ if ($user->session_status()){
                                 $titlos_ptuxiakis = $r['name'];
                                 //elegxos gia to an o xristis exei anartisei to CV tou 
                                 try{
-                                    $stmt = $conn->prepare('Select filename from files where files.uid = :uid');
+                                    $stmt = $conn->prepare('Select filename from files where files.uid = :uid and file_use = "cv" ');
                                     $stmt->bindparam(":uid", $student_id);
                                     $stmt->execute();
                                     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    //$filename_cv = $res[0]['name'];
+                                    $filename_cv=$res[0]['filename'];
+                                    //print_r($res);
                                     
                                     if ( $stmt->rowCount() > 0){
-                                        $stmt = $conn->prepare('Select cv from thesis_enquiry where thesis_enquiry.stud_id = :uid');
+                                        $stmt = $conn->prepare('Select cv from thesis_enquiry where thesis_enquiry.stud_id = :uid  ' );
                                         $stmt->bindparam(":uid", $student_id);
                                         $stmt->execute();
                                         $res2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         if ($stmt->rowCount() > 0){
-                                            $filename = $res[0]['name'];
-                                            $filename_exists = true;
+
+                                            $cv_exists = true;
                                         }
 
                                     }else{
-                                        $filename_exists = false;
+                                        $cv_exists = false;
                                     }
 
 
@@ -81,14 +85,48 @@ if ($user->session_status()){
                                     echo $conn->errorInfo();
                                 }
 
-                                    echo "<br />";
-                                    echo "<br />";
+                                try{ //Elegxos gia tin analutiki vathmologia
+                                    $stmt = $conn->prepare('Select filename from files where files.uid = :uid AND file_use = "score"');
+                                    $stmt->bindparam(":uid", $student_id);
+                                    $stmt->execute();
+                                    $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                    $filename_score = $res[0]['filename'];
+                                    //print_r($res);
+                                    
+                                    if ( $stmt->rowCount() > 0){
+                                        $stmt = $conn->prepare('Select student_score from thesis_enquiry where thesis_enquiry.stud_id = :uid  ');
+                                        $stmt->bindparam(":uid", $student_id);
+                                        $stmt->execute();
+                                        $res2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                        if ($stmt->rowCount() > 0){
+
+                                            $score_exists = true;
+                                        }
+
+                                    }else{
+                                        $score_exists = false;
+                                    }
+
+
+                                    
+                                }catch(PDOException $exc){
+                                    echo 'Problem: ' . $exc->getMessage();
+                                    echo $conn->errorCode();
+                                    echo $conn->errorInfo();
+                                }
+                                echo "<br />";
+                                echo "<br />";
                                 echo "<tbody>";
                                 echo "<tr>";
                                 echo "<td>" . $titlos_ptuxiakis . "</td>";
                                 echo "<td>" . $student_id . "</td>";
-                                if ($filename_exists == true){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
-                                    echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
+                                if ($cv_exists == true){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
+                                    echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename_cv.">Download <a/> </td>";
+                                }else {
+                                    echo "<td> &nbsp;</td>"; 
+                                }
+                                if ($score_exists == true){
+                                    echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename_score.">Download <a/> </td>";
                                 }else {
                                     echo "<td> &nbsp;</td>"; 
                                 }

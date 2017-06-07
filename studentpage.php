@@ -117,7 +117,16 @@ if ($user->session_status()){
         <div class = "two-half column">
           <form method="post" action = "upload.php" enctype="multipart/form-data">
             File: <input type = "file" name = "uploaded_file">
-            <input type="submit" name = "upload">
+            <input type="submit" name = "upload_cv">
+          </form>
+        </div>
+      </div>
+      <div class = "row">
+        <h2 class = "pagePurpose"> Προσθήκη βαθμολογίας</h2>
+        <div class = "two-half column">
+          <form method="post" action = "upload.php" enctype="multipart/form-data">
+            File: <input type = "file" name = "uploaded_file">
+            <input type="submit" name = "upload_score">
           </form>
         </div>
       </div>

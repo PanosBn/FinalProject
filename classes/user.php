@@ -162,8 +162,18 @@ class User{
                 $stmt_set_cv->bindparam(":uid",$uid);
                 $stmt_set_cv->execute();
                 
-            }else{
+            }else {
                 echo "Den ananewthike to CV";
+            }
+
+            if (strcmp($file_use,"score") == 0){
+                
+                $stmt_set_score = $this->conn->prepare('UPDATE thesis_enquiry SET student_score = true where thesis_enquiry.stud_id = :uid');
+                $stmt_set_score->bindparam(":uid",$uid);
+                $stmt_set_score->execute();
+                
+            }else {
+                echo "Den ananewthike h analutiki vathmologia";
             }
             
             return $stmt;
