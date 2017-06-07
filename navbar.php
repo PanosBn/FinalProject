@@ -8,7 +8,7 @@
                 <li><a href="thesis_requests.php">Αιτήσεις</a></li>
                 <li><a href="accepted_thesis.php">Διπλωματικές σε εξέλιξη</a></li>
                 <li><a href="#">Συνομιλίες</a></li>
-                <li><a href="#">Στατιστικά</a></li>
+                <li><a href="gantt_chart.php">Στατιστικά</a></li>
             </ul>
         </div>
     </nav>

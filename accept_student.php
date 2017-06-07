@@ -13,15 +13,20 @@ if ($user->session_status()){
                     // echo $_GET['titlos'];
 
                     try{
-                        $stmt = $conn->prepare('INSERT into accepted_thesis(name,faculty_id,stud_id) values (:name,:faculty_id,:stud_id)');
+                        $stmt = $conn->prepare('INSERT INTO accepted_thesis(name,faculty_id,stud_id) VALUES (:name,:faculty_id,:stud_id)');
                         $stmt->bindparam(":name",$titlos);
                         $stmt->bindparam(":faculty_id",$uid);
                         $stmt->bindparam(":stud_id",$student_id);
                         $stmt->execute();
 
                         //twra ginetai to delete tou thesis request tou foititi apo ti vasi dedomenwn
-                        $stmt = $conn->prepare('Delete from thesis_enquiry where stud_id = :stud_id');
+                        $stmt = $conn->prepare('DELETE FROM thesis_enquiry WHERE stud_id = :stud_id');
                         $stmt->bindparam(":stud_id", $student_id);
+                        $stmt->execute();
+
+                        //allazei tin katastasi tis ptuxiakis se "upo ektelesi" sti lista twn ptuxiakwn
+                        $stmt = $conn->prepare('UPDATE thesis SET status = 3 WHERE thesis.name = :titlos');
+                        $stmt->bindparam(":titlos",$titlos);
                         $stmt->execute();
 
 

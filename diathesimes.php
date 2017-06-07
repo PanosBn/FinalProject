@@ -99,6 +99,14 @@ if ($user->session_status()){
                                             if ( $r['status'] == 1){
                                                 $status ='Χωρίς Ανάθεση';
                                                 $thesis_id = $r['id'];
+                                            }else if ( $r['status'] == 2){
+                                                $status ="Υπό έγκριση";
+                                            }else if ( $r['status'] == 3){
+                                                $status ="Εχει ανατεθεί";
+                                            }else if ( $r['status'] == 4){
+                                                $status ="Παρουσίαση";
+                                            }else if ( $r['status'] == 5){
+                                                $status ="Ολοκληρωμένη";
                                             }
                                             echo "<tbody>";
                                             echo "<tr>";

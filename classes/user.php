@@ -135,6 +135,11 @@ class User{
 
             $stmt->execute();
 
+            //Orismos tou status tis ptuxiakis se "upo egkrisi"
+            $stmt_thesis_status_update = $this->conn->prepare('UPDATE thesis SET status = 2 WHERE thesis.id = :thesis_id');
+            $stmt_thesis_status_update->bindparam(":thesis_id", $thesis_id);
+            $stmt_thesis_status_update->execute();
+
             return $stmt;
         }
         catch (PDOException $exc){

@@ -80,7 +80,7 @@ if ($user->session_status()){
                                 echo "<td>" . $student_id . "</td>";
                                 echo "<td>" . $unread_messages . "</td>";
                                 echo "<td>" . "<a class=' button button-primary ' href=#> Go <a/> </td>";
-                                echo "<td>" . "<a class=' button button-primary ' href=#> Chart <a/> </td>";
+                                echo "<td>" . "<a class=' button button-primary ' href=gantt_chart.php> Chart <a/> </td>";
                                 echo "<td>" . "<a class=' button button-primary ' href=#> Υποβολή <a/> </td>";
                             }
 
