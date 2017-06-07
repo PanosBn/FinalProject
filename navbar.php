@@ -6,7 +6,7 @@
                 <li><a href="submitform.php">Δημιουργία διπλωματικής</a></li>
                 <li><a href="thesispage.php">Διαθέσιμες Διπλωματικές</a></li>
                 <li><a href="thesis_requests.php">Αιτήσεις</a></li>
-                <li><a href="#">Διπλωματικές σε εξέλιξη</a></li>
+                <li><a href="accepted_thesis.php">Διπλωματικές σε εξέλιξη</a></li>
                 <li><a href="#">Συνομιλίες</a></li>
                 <li><a href="#">Στατιστικά</a></li>
             </ul>

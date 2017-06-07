@@ -17,11 +17,14 @@ try {
 }
 
         try{
-            $stmt = $conn->prepare('CREATE TABLE files (
+            $stmt = $conn->prepare('CREATE TABLE messages (
                                             id Int PRIMARY KEY AUTO_INCREMENT,
-                                            name Varchar(255),
                                             uid int NOT NULL,
-                                            foreign key (uid) references user(uid) on delete cascade on update cascade)');
+                                            sent_by int NOT NULL,
+                                            message_text text ,
+                                            message_date datetime,
+                                            foreign key (uid) references user(uid) on delete cascade on update cascade,
+                                            foreign key(sent_by) references user(uid)on delete cascade on update cascade)');
             $stmt->execute();
         }
         catch (PDOException $exc){
