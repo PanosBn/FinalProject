@@ -29,6 +29,7 @@ if ($user->session_status()){
 }else{
     Header("Location: landingpage.php");
 }
+// href=accept_student.php?titlos=".$titlos_ptuxiakis."&student_id=".$student_id.
 ?>
 
     <div class="ongoing-thesis-list">
@@ -50,6 +51,7 @@ if ($user->session_status()){
                             foreach ( $row as $r){
                                 
                                 $student_id = $r['uid'];
+                                $titlos_ptuxiakis = $r['name'];
                                 //elegxos gia to an o xristis exei anartisei to CV tou 
                                 try{
                                     $stmt = $conn->prepare('Select filename from files where files.uid = :uid');
@@ -83,14 +85,15 @@ if ($user->session_status()){
                                     echo "<br />";
                                 echo "<tbody>";
                                 echo "<tr>";
-                                echo "<td>" . $r['name'] . "</td>";
+                                echo "<td>" . $titlos_ptuxiakis . "</td>";
                                 echo "<td>" . $student_id . "</td>";
                                 if ($filename_exists == true){ //H epilogi gia download tou CV h tis vathmologias emfanizetai mono an exei anevei to arxeio
                                     echo "<td>" . "<a class=' button button-primary ' href=download.php?file=".$filename.">Download <a/> </td>";
                                 }else {
                                     echo "<td> &nbsp;</td>"; 
                                 }
-                                echo "<td>" . "<a class=' button button-primary' href=accept_student.php?student_id=".$student_id.">Αποδοχή <a/> </td>";
+                                echo "<td>" . "<a class=' button button-primary' href=accept_student.php?student_id=".$student_id."&titlos=".urlencode($titlos_ptuxiakis).">Αποδοχή <a/> </td>";
+                                 
                                 echo "</tr>";
                                 echo "</tbody>";
                             }
