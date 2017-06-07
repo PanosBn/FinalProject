@@ -23,6 +23,7 @@ if ($user->session_status()){
                   <label for = "gantt_lines">Εισάγετε τον αριθμό των διαστημάτων του γραφήματος Gantt </label>
                   <input type="text" id="gantt_lines" name="gantt_lines"><br />
                   <a href="#" id="arithmos_gantt" onclick="addFields()">Εμφάνιση</a>
+                   <div id="dates"/>
                    <div id="lines"/>
                 </section>
             </div>
@@ -38,28 +39,38 @@ if ($user->session_status()){
 
 <script type="text/javascript">
         function addFields(){
-            // Number of inputs to create
+
             var number = document.getElementById("gantt_lines").value;
-            // Container <div> where dynamic content will be placed
             var container = document.getElementById("lines");
-            // Clear previous contents of the container
+            var date_container = document.getElementById("dates");
             while (container.hasChildNodes()) {
                 container.removeChild(container.lastChild);
             }
             for (i=0;i<number;i++){
-                // Append a node with a random text
                 container.appendChild(document.createTextNode((i+1) + " "));
-                // Create an <input> element, set its type and name attributes
+
                 var input = document.createElement("input");
-                var input_date = document.createElement("input_date");
+                var start_date = document.createElement("input");
+                var end_date = document.createElement("input");
                 input.type = "text";
-                input_date.type = "date";
                 input.name = "gantt_lines" + i;
-                input_date.name = "gantt_date" + i;
+                start_date.type = "date";
+                start_date.name = "gantt_date" + i;
+                end_date.type = "date";
+                end_date.name = "gantt_date" + i;
                 container.appendChild(input);
-                // Append a line break 
+                container.appendChild(document.createTextNode( " Εναρξη: "));
+                container.appendChild(start_date);
+                container.appendChild(document.createTextNode( " Λήξη: "));
+                container.appendChild(end_date);
+
                 container.appendChild(document.createElement("br"));
             }
+            //Dhmiourgia koumpiou kai topothetisi tou katw apo n-osto element pou tha paragei o xristis gia to gantt
+            var span = document.createElement("span");
+            span.innerHTML = '<button class="button button-primary" id="button_gantt" onclick="callJavascriptFunction()">Δημιουργία </>';
+            container.appendChild(span);
+            
         }     
 
 </script>
