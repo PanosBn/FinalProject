@@ -50,17 +50,24 @@ if ($user->session_status()){
                 container.appendChild(document.createTextNode((i+1) + " "));
 
                 var input = document.createElement("input");
+                var task = document.createElement("input");
                 var start_date = document.createElement("input");
                 var end_date = document.createElement("input");
                 input.type = "text";
                 input.name = "gantt_lines_" + i;
+                task.type = "text";
+                task.name = "gantt_task_" + i;
                 start_date.type = "date";
                 start_date.name = "start_date_" + i;
                 end_date.type = "date";
                 end_date.name = "end_date_" + i;
                 container.appendChild(input);
+                container.appendChild(document.createTextNode( " Τίτλος: "));
+                container.appendChild(task);
+                container.appendChild(document.createElement("br"));
                 container.appendChild(document.createTextNode( " Εναρξη: "));
                 container.appendChild(start_date);
+                // container.appendChild(document.createElement("br"));
                 container.appendChild(document.createTextNode( " Λήξη: "));
                 container.appendChild(end_date);
 
@@ -81,16 +88,23 @@ if ($user->session_status()){
           //Kathe stoixeio tupou text ksekina me to name = "gantt_lines_ + ena auksonta arithmo"
           //To idio isxuei kai gia ta stoixeia typou date , start_date_ + arithmos , end_date_ + arithmos
           var elements_perigrafes = document.querySelectorAll('input[name^="gantt_lines_"]');
+          var elements_task = document.querySelectorAll('input[name^="gantt_task_"]');
           var elemetns_startDate = document.querySelectorAll('input[name^="start_date_"]');
           var elemetns_endDate = document.querySelectorAll('input[name^="end_date_"]');
 
           var perigrafes_array = new Array();
+          var tasks_array = new Array();
           var start_date_array = new Array();
           var end_date_array = new Array();
 
           for (i = 0; i < elements_perigrafes.length; i++) {
                 //console.log(elements_perigrafes[i].value);
                 perigrafes_array.push(elements_perigrafes[i].value);
+                console.log(perigrafes_array[i]);
+          }
+          for (i = 0; i < elements_task.length; i++) {
+                //console.log(elements_perigrafes[i].value);
+                tasks_array.push(elements_task[i].value);
                 console.log(perigrafes_array[i]);
           }
           for (i = 0; i < elements_perigrafes.length; i++) {
@@ -104,8 +118,78 @@ if ($user->session_status()){
                 console.log(end_date_array[i]);
           }
 
+          var number_of_elements = elements_perigrafes.length;
 
+          google.charts.load('current', {'packages':['gantt']});
+          google.charts.setOnLoadCallback(drawChart);
+
+          function daysToMilliseconds(days) {
+            return days * 24 * 60 * 60 * 1000;
+          }
+
+          function drawChart() {
+          
+          var data = new google.visualization.DataTable();
+                var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Task ID');
+          data.addColumn('string', 'Task Name');
+          data.addColumn('string', 'Resource');
+          data.addColumn('date', 'Start Date');
+          data.addColumn('date', 'End Date');
+          data.addColumn('number', 'Duration');
+          data.addColumn('number', 'Percent Complete');
+          data.addColumn('string', 'Dependencies');
+
+          // data.addRows([
+          //   ['2014Spring', 'Spring 2014', 'spring',
+          //   new Date(2014, 2, 22), new Date(2014, 5, 20), null, 100, null],
+          //   ['2014Summer', 'Summer 2014', 'summer',
+          //   new Date(2014, 5, 21), new Date(2014, 8, 20), null, 100, null],
+          //   ['2014Autumn', 'Autumn 2014', 'autumn',
+          //   new Date(2014, 8, 21), new Date(2014, 11, 20), null, 100, null],
+          //   ['2014Winter', 'Winter 2014', 'winter',
+          //   new Date(2014, 11, 21), new Date(2015, 2, 21), null, 100, null],
+          //   ['2015Spring', 'Spring 2015', 'spring',
+          //   new Date(2015, 2, 22), new Date(2015, 5, 20), null, 50, null],
+          //   ['2015Summer', 'Summer 2015', 'summer',
+          //   new Date(2015, 5, 21), new Date(2015, 8, 20), null, 0, null],
+          //   ['2015Autumn', 'Autumn 2015', 'autumn',
+          //   new Date(2015, 8, 21), new Date(2015, 11, 20), null, 0, null],
+          //   ['2015Winter', 'Winter 2015', 'winter',
+          //   new Date(2015, 11, 21), new Date(2016, 2, 21), null, 0, null],
+          //   ['Football', 'Football Season', 'sports',
+          //   new Date(2014, 8, 4), new Date(2015, 1, 1), null, 100, null],
+          //   ['Baseball', 'Baseball Season', 'sports',
+          //   new Date(2015, 2, 31), new Date(2015, 9, 20), null, 14, null],
+          //   ['Basketball', 'Basketball Season', 'sports',
+          //   new Date(2014, 9, 28), new Date(2015, 5, 20), null, 86, null],
+          //   ['Hockey', 'Hockey Season', 'sports',
+          //   new Date(2014, 9, 8), new Date(2015, 5, 21), null, 89, null]
+          // ]);
+
+          for (i = 0; i<number_of_elements; i++){
+            var task_id = i;
+            data.addRows([
+
+              [task_id.toString(), perigrafes_array[i],tasks_array[i],new Date(start_date_array[i]),new Date(end_date_array[i]),null,0,null]
+            ]);
+          }
+        
+          var options = {
+          height: 400,
+          gantt: {
+            trackHeight: 30
+          }
+        };
+
+        var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+          
         }
+
+
+  }
 
 </script>
 
