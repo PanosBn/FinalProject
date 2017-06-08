@@ -6,6 +6,8 @@ require('injecthtml/header.php');
 
 if (!$user->session_status()){
   echo "<div style=\" text-align: center; color: red;\">Πρέπει να είστε συνδεδεμένος για να δείτε αυτή τη σελίδα</div>";
+}else{
+  
 }
 
 //An o xristis sundethei me epituxia tote emfanizetai to navigation bar, stoixeia gia to profile tou kai alles plirofories
@@ -15,15 +17,34 @@ if ($user->session_status()){
 
     try{
       $uid = $_SESSION['user_id'];
-      $stmt = $conn->prepare('SELECT faculty_id FROM accepted_thesis where accepted_thesis.stud_id = :uid');
+      $stmt = $conn->prepare('SELECT * FROM accepted_thesis where accepted_thesis.stud_id = :uid');
       $stmt->execute(array('uid'=>$uid));
       //Elegxos gia to an uparxei ptuxiakh pou exei ginei dekti apo ton kathigiti
-      $row = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-      //An uparxei tote vres kai ta upoloipa meli se periptosi pou uparxoun
+      $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+      
+      
        if (count($row) == 0) {
           $thesis = false;
        }else{
-          $stmt = $conn->prepare('SELECT * FROM accepted_thesis where ');
+          $thesis = true;
+
+          try{
+            $unread_messages = 0;
+            $stmt = $conn->prepare('Select * from messages where is_read = 0 AND uid = :uid');
+            $stmt->bindparam(":uid",$uid);
+            $stmt->execute();
+            $row2 = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ( count($row) > 0){
+            foreach($row2 as $r){
+                 $unread_messages = $unread_messages + 1;
+            }
+          }
+
+          }catch(PDOExeption $exc){
+            echo 'Problem: '. $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
+          }
        }
 
 
@@ -74,7 +95,7 @@ if ($user->session_status()){
                   <tr>
                   <td><?php echo($_SESSION['user_info'][name] . " " . $_SESSION['user_info'][surname]) ?> </td>
                   <td><?php echo($_SESSION['user_info'][email]) ?> </td>
-                  <td>Χωρίς πτυχιακή</td>
+                  <td><?php echo $r['name'] ?> </td>
                   </tr>
               </tbody>
             </table>
@@ -88,25 +109,27 @@ if ($user->session_status()){
           <thead>
             <tr>
               <th>Ονομα</th>
-              <th>Περιγραφή</th>
-              <th>Κατάσταση</th>
-              <th>Αίτηση</th>
+              <th>Κωδικός Καθηγητή</th>
+              <th>Μη αναγνωσμένα μηνύματα</th> 
+              <th>Συνομηλία</th>              
+              <th>Gantt Chart</th>
             </tr>
           </thead>
             <tbody class = "styled-row">
           <?php
+            if ($thesis == true);{
             foreach ( $row as $r){
                     echo "<tbody>";
                     echo "<tr>";
                     echo "<td>" . $r['name'] . "</td>";
-                    echo "<td>" . $r['perigrafi'] . "</td>";
-                    echo "<td>" .$status. "</td>";
-          ?>
-              <td><input class="button-primary" name ="enquiry" type="submit" value="Αίτηση"></td>
-          <?php
+                    echo "<td>" . $r['faculty_id'] . "</td>";
+                    echo "<td>" . $unread_messages . "</td>";
+                    echo "<td>" . "<a class=' button button-primary ' href=#> Go <a/> </td>";
+                    echo "<td>" . "<a class=' button button-primary ' href=gantt_chart.php> Chart <a/> </td>";
               echo "</tr>";
               echo "</tbody>";                                                                       
               }
+            }
           ?>
         </table>
         </div>

@@ -58,7 +58,8 @@ if ($user->session_status()){
                                 //Euresi mi anagnwsmenwn minimatwn
                                 try{
                                     $unread_messages = 0;
-                                    $stmt = $conn->prepare('Select * from messages where is_read = 0');
+                                    $stmt = $conn->prepare('Select * from messages where is_read = 0 AND uid = :uid');
+                                    $stmt->bindparam(":uid", $uid);
                                     $stmt->execute();
                                     $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     if ( count($row) > 0){
