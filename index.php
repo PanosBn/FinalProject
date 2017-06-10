@@ -1,7 +1,6 @@
 <?php
 require_once('config.php');
-require_once ('classes/student.php');
-require_once ('classes/professor.php');
+
 
 /*if ($user->is_logged_in() ){ //An o xristis uparxei kai exei kanei login tote automata ginetai redirect stin kentriki selida
     header('Location: memberpage.php');
@@ -50,9 +49,6 @@ if(isset($_POST['submit'])) {
              $user->register($firstname,$lastname,$password,$email,$unistatus);
              header("Location: landingpage.php" );
           }
-          // if($user->register($firstname,$lastname,$password,$email,$unistatus));{
-          //   header("Location: landingpage.php" );
-          // }
         }catch(Exception $exc){
           echo $exc->getMessage();
         }

@@ -190,6 +190,30 @@ class User{
         }
     }
 
+    public function sendMsg($recepient,$message_text,$message_date, $is_read){
+
+          try{
+            $stmt = $this->conn->prepare('INSERT INTO messages(uid,sent_by,message_text,message_date,is_read)
+                                                      VALUES (:recepient, :sent_by, :message_text, :message_date, :is_read)');
+            $me = $_SESSION['user_id'];
+            $stmt->bindparam(":uid", $recepient);
+            $stmt->bindparam(":sent_by", $me);
+            $stmt->bindparam(":message_text", $message_text);
+            $stmt->bindparam(":message_date", $message_date);
+            $stmt->bindparam(":is_read", $is_read);
+
+            $stmt->execute();
+
+            return $stmt;
+        }
+        catch (PDOException $exc){
+            echo 'Problemo: ' . $exc->getMessage();
+            echo $conn->errorCode();
+            echo $conn->errorInfo();
+        }
+
+    }
+
     public function logout(){
 
         session_destroy();

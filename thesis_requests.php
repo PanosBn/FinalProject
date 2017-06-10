@@ -45,6 +45,7 @@ if ($user->session_status()){
                                 <th>CV φοιτητή</th>
                                 <th>Αναλυτική Βαθμολογία</th>
                                 <th>Αποδοχή</th>
+                                <th>Απόρριψη</th>
                             </tr>
                         </thead>
                         <tbody class = "styled-row">
@@ -61,7 +62,7 @@ if ($user->session_status()){
                                     $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     //$filename_cv = $res[0]['name'];
                                     $filename_cv=$res[0]['filename'];
-                                    //print_r($res);
+                                    // print_r($res);
                                     
                                     if ( $stmt->rowCount() > 0){
                                         $stmt = $conn->prepare('Select cv from thesis_enquiry where thesis_enquiry.stud_id = :uid  ' );

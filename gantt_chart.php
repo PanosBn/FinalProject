@@ -5,7 +5,10 @@ require('injecthtml/header.php');
 if ($user->session_status()){
     if ($_SESSION["unistatus"] == "professor"){
     require('navbar.php');
+    }else {
+      header("Location: landingpage.php");
     }
+    
 }
 
 ?>
@@ -78,7 +81,7 @@ if ($user->session_status()){
         }
 
         function createGanttCharts(){
-          //arxika tha mazepsoume oles tis varialbes apo kathe typo dedomenwn (perigrafi,task description , start date kai end date)
+          //arxika tha mazepsoume oles tis variables apo kathe typo dedomenwn (perigrafi,task description , start date kai end date)
           //Tha topothetithoun se 4 arrays
           //Epeidi ta pedia dimiourgountai dunamika den kseroume to plires onoma tous h ton arithmo tous opote tha ta vroume
           //kanontas xrisi twn Selectors -->  https://www.w3.org/TR/selectors-api/ 

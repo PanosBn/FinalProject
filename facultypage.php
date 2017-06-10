@@ -10,13 +10,16 @@ if (!$user->session_status()){
 
 //An o xristis sundethei me epituxia tote emfanizetai to navigation bar, stoixeia gia to profile tou kai alles plirofories
 if ($user->session_status()){
+  if ($_SESSION["unistatus"] == "professor"){
     require('navbar.php');
-    //echo "<div style=\"color: red;\">Succesfull Login</div>";
-
     
-    if(isset($_POST['btn-logout'])){
-    $user->logout();
-    }
+      if(isset($_POST['btn-logout'])){
+      $user->logout();
+      }
+  }
+  
+}else{
+  header("Location: landingpage.php");
 }
 
 ?>
